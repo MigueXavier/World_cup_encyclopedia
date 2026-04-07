@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Cup 2026</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="main-header">
+    <div class="left-section">
+        <div class="menu-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="logo-container">
+            <img src="https://s2-ge.glbimg.com/RGU5LEYpvpcPRro8r9wxAEvmltU=/0x0:2048x2048/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2023/q/Q/e3U1thRemgE9lEG0J4gQ/logo-fifa.jpg" alt="FIFA Logo">
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="image-wrapper">
+
+        <div class="image-overlay" id="image-overlay"></div>
+        <img src="https://upload.wikimedia.org/wikipedia/pt/d/d7/Logo_copa_2026.png" alt="World Cup 2026 Logo" id="main-image">
+    </div>
+    <div class="text-section">
+        <h1>World Cup <span class="year">2026</span></h1>
+        <p id="country-text">Selecione um país para conhecer sua história na Copa do Mundo.</p>
+    </div>
+</main>
+
+<section id="country-section">
+    <div class="country-ball">
+        
+        <button class="country-button" id="brasil">
+            <img src="https://flagicons.lipis.dev/flags/4x3/br.svg" alt="Brasil">
+        </button>
+        <span class="country-label">Brasil</span>
+    </div>
+    <div class="country-ball">
+        <button class="country-button" id="alemanha">
+            <img src="https://flagicons.lipis.dev/flags/4x3/de.svg" alt="Alemanha">
+        </button>
+        <span class="country-label">Alemanha</span>
+    </div>
+    <div class="country-ball">
+  
+        <button class="country-button" id="franca">
+            <img src="https://flagicons.lipis.dev/flags/4x3/fr.svg" alt="França">
+        </button>
+        <span class="country-label">França</span>
+    </div>
+</section>
+
+
+
+<section id="encyclopedia-section">
+
+    <div class="enc-header">
+        <h2 class="enc-title">Enciclopédia</h2>
+        <p class="enc-subtitle">Jogadores, edições, times e jogos históricos</p>
+    </div>
+
+    <div class="enc-toolbar">
+        <div class="enc-filters">
+            <button class="enc-filter-btn active">Todos</button>
+            <button class="enc-filter-btn">Jogadores</button>
+            <button class="enc-filter-btn">Edições</button>
+            <button class="enc-filter-btn">Times</button>
+            <button class="enc-filter-btn">Jogos</button>
+        </div>
+        <div class="enc-search-wrapper">
+            <svg class="enc-search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" class="enc-search" placeholder="Buscar...">
+        </div>
+    </div>
+
+    <div class="enc-grid">
+
+  
+        <div class="enc-card">
+            <div class="enc-card-thumb thumb-jogador">
+                <img src="images/Pele - FootyRenders.png" alt="Pelé" onerror="this.style.display='none';this.parentElement.querySelector('.enc-fallback').style.display='flex'">
+                <div class="enc-fallback">Pelé</div>
+            </div>
+            <div class="enc-card-body">
+                <span class="enc-badge badge-jogador">Jogador</span>
+                <h3 class="enc-card-name">Pelé</h3>
+                <p class="enc-card-sub">Maior artilheiro da história da Copa</p>
+                <div class="enc-card-meta">
+                    <span>Brasil</span>
+                    <span>3 títulos</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="enc-card">
+            <div class="enc-card-thumb thumb-jogador">
+                <img src="images/Franz Beckenbauer - FootyRenders.png" alt="Beckenbauer" onerror="this.style.display='none';this.parentElement.querySelector('.enc-fallback').style.display='flex'">
+                <div class="enc-fallback">Beckenbauer</div>
+            </div>
+            <div class="enc-card-body">
+                <span class="enc-badge badge-jogador">Jogador</span>
+                <h3 class="enc-card-name">Franz Beckenbauer</h3>
+                <p class="enc-card-sub">Único a vencer como jogador e técnico</p>
+                <div class="enc-card-meta">
+                    <span>Alemanha</span>
+                    <span>Der Kaiser</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="enc-card">
+            <div class="enc-card-thumb thumb-jogador">
+                <img src="images/Zinedine Zidane - FootyRenders.png" alt="Zidane" onerror="this.style.display='none';this.parentElement.querySelector('.enc-fallback').style.display='flex'">
+                <div class="enc-fallback">Zidane</div>
+            </div>
+            <div class="enc-card-body">
+                <span class="enc-badge badge-jogador">Jogador</span>
+                <h3 class="enc-card-name">Zinedine Zidane</h3>
+                <p class="enc-card-sub">MVP da Copa de 1998</p>
+                <div class="enc-card-meta">
+                    <span>França</span>
+                    <span>Campeão 1998</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="enc-card">
+            <div class="enc-card-thumb thumb-jogador">
+                <div class="enc-fallback">Klose</div>
+            </div>
+            <div class="enc-card-body">
+                <span class="enc-badge badge-jogador">Jogador</span>
+                <h3 class="enc-card-name">Miroslav Klose</h3>
+                <p class="enc-card-sub">Maior artilheiro de Copas — 16 gols</p>
+                <div class="enc-card-meta">
+                    <span>Alemanha</span>
+                    <span>16 gols</span>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="enc-card">
+            <div class="enc-card-thumb thumb-edicao">
+                <span class="enc-thumb-year">1970</span>
+            </div>
+            <div class="enc-card-body">
+                <span class="enc-badge badge-edicao">Edição</span>
+                <h3 class="enc-card-name">México 1970</h3>
+                <p class="enc-card-sub">Considerada a Copa mais bonita da história</p>
+                <div class="enc-card-meta">
+                    <span>16 seleções</span>
+                    <span>1ª em TV colorida</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="enc-card">
+            <div class="enc-card-thumb thumb-edicao">
+                <span class="enc-thumb-year">1998</span>
+            </div>
+            <div class="enc-card-body">
+                <span class="enc-badge badge-edicao">Edição</span>
+                <h3 class="enc-card-name">França 1998</h3>
+                <p class="enc-card-sub">Zidane decide com dois gols de cabeça</p>
+                <div class="enc-card-meta">
+                    <span>32 seleções</span>
+                    <span>Stade de France</span>
+                </div>
+            </div>
+        </div>
+
+     
+        <div class="enc-card">
+            <div class="enc-card-thumb thumb-time">
+                <img src="https://flagicons.lipis.dev/flags/4x3/br.svg" alt="Brasil" class="enc-flag">
+            </div>
+            <div class="enc-card-body">
+                <span class="enc-badge badge-time">Time</span>
+                <h3 class="enc-card-name">Brasil</h3>
+                <p class="enc-card-sub">Único país em todas as edições da Copa</p>
+                <div class="enc-card-meta">
+                    <span>5 títulos</span>
+                    <span>1958 – 2002</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="enc-card">
+            <div class="enc-card-thumb thumb-time">
+                <img src="https://flagicons.lipis.dev/flags/4x3/de.svg" alt="Alemanha" class="enc-flag">
+            </div>
+            <div class="enc-card-body">
+                <span class="enc-badge badge-time">Time</span>
+                <h3 class="enc-card-name">Alemanha</h3>
+                <p class="enc-card-sub">3 finais consecutivas entre 1982 e 1990</p>
+                <div class="enc-card-meta">
+                    <span>4 títulos</span>
+                    <span>1954 – 2014</span>
+                </div>
+            </div>
+        </div>
+
+       
+        <div class="enc-card">
+            <div class="enc-card-thumb thumb-jogo">
+                <div class="enc-placar">
+                    <span>7</span>
+                    <span class="enc-placar-x">×</span>
+                    <span>1</span>
+                </div>
+            </div>
+            <div class="enc-card-body">
+                <span class="enc-badge badge-jogo">Jogo</span>
+                <h3 class="enc-card-name">Alemanha 7 × 1 Brasil</h3>
+                <p class="enc-card-sub">Maior goleada em semifinal da história</p>
+                <div class="enc-card-meta">
+                    <span>Semifinal 2014</span>
+                    <span>Belo Horizonte</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="enc-card">
+            <div class="enc-card-thumb thumb-jogo">
+                <div class="enc-placar">
+                    <span>3</span>
+                    <span class="enc-placar-x">×</span>
+                    <span>3</span>
+                </div>
+            </div>
+            <div class="enc-card-body">
+                <span class="enc-badge badge-jogo">Jogo</span>
+                <h3 class="enc-card-name">Argentina 3 × 3 França</h3>
+                <p class="enc-card-sub">Considerada a melhor final da história</p>
+                <div class="enc-card-meta">
+                    <span>Final 2022</span>
+                    <span>Lusail</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="enc-card">
+            <div class="enc-card-thumb thumb-edicao">
+                <span class="enc-thumb-year">2002</span>
+            </div>
+            <div class="enc-card-body">
+                <span class="enc-badge badge-edicao">Edição</span>
+                <h3 class="enc-card-name">Coreia/Japão 2002</h3>
+                <p class="enc-card-sub">Primeiro torneio realizado na Ásia</p>
+                <div class="enc-card-meta">
+                    <span>32 seleções</span>
+                    <span>Dupla sede</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="enc-card">
+            <div class="enc-card-thumb thumb-time">
+                <img src="https://flagicons.lipis.dev/flags/4x3/ar.svg" alt="Argentina" class="enc-flag">
+            </div>
+            <div class="enc-card-body">
+                <span class="enc-badge badge-time">Time</span>
+                <h3 class="enc-card-name">Argentina</h3>
+                <p class="enc-card-sub">Messi encerrou o ciclo com o tricampeonato</p>
+                <div class="enc-card-meta">
+                    <span>3 títulos</span>
+                    <span>1978 – 2022</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<script src="script.js"></script>
+</body>
+
+</html>
