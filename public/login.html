@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - World Cup 2026</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .login-card {
+            background: #111;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+        }
+        .login-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 8px;
+        }
+        .form-control {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .form-control:focus {
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+        .submit-btn {
+            width: 100%;
+            background: #fff;
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            padding: 14px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            margin-top: 10px;
+        }
+        .submit-btn:hover {
+            background: rgba(255, 255, 255, 0.9);
+        }
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+        .msg-box {
+            font-size: 0.8rem;
+            color: #ff4a4a;
+            text-align: center;
+            margin-top: 16px;
+            min-height: 20px;
+        }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+        }
+        .back-link:hover {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-card">
+    <h2 class="login-title">Área do Torcedor</h2>
+    <form id="loginForm">
+        <div class="form-group">
+            <label for="txtLogin">Usuário</label>
+            <input type="text" id="txtLogin" class="form-control" placeholder="Digite seu usuário" required>
+        </div>
+        <div class="form-group">
+            <label for="txtSenha">Senha</label>
+            <input type="password" id="txtSenha" class="form-control" placeholder="Digite sua senha" required>
+        </div>
+        <button type="submit" class="submit-btn">Entrar</button>
+    </form>
+    <div id="msg" class="msg-box"></div>
+    <a href="index.html" class="back-link">❮ Voltar para a Home</a>
+</div>
+
+<script src="../assets/js/login.js"></script>
+</body>
+</html>
