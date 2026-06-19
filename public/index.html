@@ -19,9 +19,14 @@
         <div class="logo-container">
             <img src="https://s2-ge.glbimg.com/RGU5LEYpvpcPRro8r9wxAEvmltU=/0x0:2048x2048/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_bc8228b6673f488aa253bbcb03c80ec5/internal_photos/bs/2023/q/Q/e3U1thRemgE9lEG0J4gQ/logo-fifa.jpg" alt="FIFA Logo">
         </div>
+        
         <div id="admin-panel-link"></div>
     </div>
-    <div class="right-section">
+
+    <div class="right-section" style="display: flex; align-items: center; gap: 15px;">
+        <a href="cadastro_itens.html" class="login-btn" style="text-decoration: none; background: #6ddc8a; color: #000; border: none; font-weight: 600; padding: 8px 16px; border-radius: 4px; font-size: 0.85rem; display: inline-flex; align-items: center;">
+            Painel Admin
+        </a>
         <button class="login-btn" id="loginBtn">Entrar</button>
     </div>
 </header>
@@ -29,7 +34,7 @@
 <main>
     <div class="image-wrapper">
         <div class="image-overlay" id="image-overlay"></div>
-        <img src="https://upload.wikimedia.org/wikipedia/pt/d/d7/Logo_copa_2026.png" alt="World Cup 2026 Logo" id="main-image">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/1/17/2026_FIFA_World_Cup_emblem.svg/960px-2026_FIFA_World_Cup_emblem.svg.png" alt="World Cup 2026 Logo" id="main-image">
     </div>
     <div class="text-section">
         <h1>World Cup <span class="year">2026</span></h1>
@@ -79,8 +84,16 @@
     <div class="enc-toolbar">
         <div class="enc-filters">
             <button class="enc-filter-btn active" id="filter-all-btn">Todos</button>
-            <button class="enc-filter-btn" id="filter-fav-btn" style="display: none;">Favoritos ❤️</button>
+            <button class="enc-filter-btn" id="filter-fav-btn">Favoritos ❤️</button>
+            
+            <span class="filter-separator" style="color: rgba(255,255,255,0.2); margin: 0 5px;">|</span>
+
+            <button class="enc-filter-btn type-filter" data-type="jogadores">Jogadores</button>
+            <button class="enc-filter-btn type-filter" data-type="copas">Edições</button>
+            <button class="enc-filter-btn type-filter" data-type="times">Times</button>
+            <button class="enc-filter-btn type-filter" data-type="jogos">Jogos</button>
         </div>
+        
         <div class="enc-search-wrapper">
             <svg class="enc-search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>

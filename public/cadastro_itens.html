@@ -1,11 +1,118 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Painel Administrativo - CRUD de Copas</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #111; color: #fff; padding: 20px; font-family: 'Inter', sans-serif; }
+        .admin-container { max-width: 1000px; margin: 0 auto; background: #000; padding: 30px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 1px solid #222; padding-bottom: 15px; }
+        .admin-title { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; letter-spacing: 1px; }
+        .btn-back { color: #aaa; text-decoration: none; font-size: 0.9rem; }
+        .btn-back:hover { color: #fff; }
+        
+        /* Formulário */
+        .form-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        .form-group { display: flex; flex-direction: column; margin-bottom: 15px; }
+        .form-group.full-width { grid-column: span 3; }
+        .form-group label { font-size: 0.8rem; text-transform: uppercase; color: #888; margin-bottom: 5px; font-weight: 600; }
+        .form-control { background: #161616; border: 1px solid #333; padding: 10px; border-radius: 4px; color: #fff; font-family: 'Inter', sans-serif; }
+        .form-control:focus { border-color: #fff; outline: none; }
+        .btn-save { background: #6ddc8a; color: #000; border: none; padding: 12px 24px; font-weight: 600; border-radius: 4px; cursor: pointer; text-transform: uppercase; font-size: 0.85rem; }
+        .btn-clear { background: #333; color: #fff; border: none; padding: 12px 24px; font-weight: 600; border-radius: 4px; cursor: pointer; text-transform: uppercase; font-size: 0.85rem; margin-left: 10px; }
+
+        /* Tabela */
+        .table-wrapper { margin-top: 40px; overflow-x: auto; }
+        .admin-table { width: 100%; border-collapse: collapse; text-align: left; }
+        .admin-table th { background: #161616; padding: 12px; font-size: 0.8rem; text-transform: uppercase; color: #888; border-bottom: 2px solid #333; }
+        .admin-table td { padding: 12px; border-bottom: 1px solid #222; font-size: 0.9rem; vertical-align: middle; }
+        .btn-edit { background: #e7bf1a; color: #000; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-weight: 600; margin-right: 5px; }
+        .btn-delete { background: #ff4a4a; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; font-weight: 600; }
+    </style>
 </head>
 <body>
-    
+
+<div class="admin-container">
+    <div class="admin-header">
+        <h2 class="admin-title">Gerenciamento de Edições (Copas)</h2>
+        <a href="index.html" class="btn-back">❮ Voltar para Home</a>
+    </div>
+
+    <form id="formCopa">
+        <input type="hidden" id="txtId">
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label for="txtYear">Ano da Edição</label>
+                <input type="number" id="txtYear" class="form-control" required placeholder="Ex: 2026">
+            </div>
+            <div class="form-group">
+                <label for="txtHost">País Sede</label>
+                <input type="text" id="txtHost" class="form-control" required placeholder="Ex: Canadá, EUA e México">
+            </div>
+            <div class="form-group">
+                <label for="txtWinner">Campeão</label>
+                <input type="text" id="txtWinner" class="form-control" required placeholder="Ex: Brasil">
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="txtGoals">Gols Marcados</label>
+                <input type="number" id="txtGoals" class="form-control" required placeholder="Ex: 172">
+            </div>
+            <div class="form-group">
+                <label for="txtMatches">Partidas Jogadas</label>
+                <input type="number" id="txtMatches" class="form-control" required placeholder="Ex: 64">
+            </div>
+            <div class="form-group">
+                <label for="txtDestaque">Colocar em Destaque?</label>
+                <select id="txtDestaque" class="form-control">
+                    <option value="false">Não</option>
+                    <option value="true">Sim (Aparecerá no Slider)</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="txtImageUrl">URL da Imagem de Capa</label>
+            <input type="url" id="txtImageUrl" class="form-control" required placeholder="https://exemplo.com/imagem.jpg">
+        </div>
+
+        <div class="form-group">
+            <label for="txtDescription">Descrição Curta</label>
+            <input type="text" id="txtDescription" class="form-control" required placeholder="Resumo simples para os cards...">
+        </div>
+
+        <div class="form-group">
+            <label for="txtLongDescription">Descrição Longa (Detalhada)</label>
+            <textarea id="txtLongDescription" class="form-control" rows="3" required placeholder="História completa da competição..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-save" id="btnSubmit">Salvar Edição</button>
+        <button type="button" class="btn-clear" id="btnClear" onclick="limparFormulario()">Cancelar</button>
+    </form>
+
+    <div class="table-wrapper">
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Ano</th>
+                    <th>Sede</th>
+                    <th>Campeão</th>
+                    <th>Destaque</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="tabelaCopasCorpo">
+                </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="../assets/js/crud.js"></script>
 </body>
 </html>

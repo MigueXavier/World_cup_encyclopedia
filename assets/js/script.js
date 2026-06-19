@@ -17,13 +17,17 @@ const searchBar = document.getElementById('searchBar');
 const filterAllBtn = document.getElementById('filter-all-btn');
 const filterFavBtn = document.getElementById('filter-fav-btn');
 
+// Seleção das novas opções de filtro por categoria
+const typeFilters = document.querySelectorAll('.type-filter');
+
 const allButtons = [botaoBrasil, botaoAlemanha, botaoFranca];
 
 let currentSessionUser = null;
 let databaseCopas = [];
 let userFavorites = [];
 let activeSliderIndex = 0;
-let currentViewMode = 'all';
+let currentViewMode = 'all'; 
+let selectedTypeFilter = null; // Rastreia o filtro de tipo ativo ('jogadores', 'copas', etc.)
 
 function processUserSession() {
     const sessionData = sessionStorage.getItem('usuarioCorrente');
@@ -90,7 +94,7 @@ botaoBrasil.addEventListener('click', () => {
         headerBg:  '#3E9630',
         sectionBg: '#0A2D9F',
         bodyBg:    '#E7BF1A',
-        imgSrc:    'images/Pele - FootyRenders.png',
+        imgSrc:    '../images/Pele - FootyRenders.png',
         imgAlt:    'Pelé',
         countrytext: 'Penta campeão do mundo!',
         activeBtn: botaoBrasil,
@@ -107,7 +111,7 @@ botaoAlemanha.addEventListener('click', () => {
         headerBg:  '#000000',
         sectionBg: '#C0C0C0',
         bodyBg:    '#f4f4f4',
-        imgSrc:    'images/Franz Beckenbauer - FootyRenders.png',
+        imgSrc:    '../images/Franz Beckenbauer - FootyRenders.png',
         imgAlt:    'Franz Beckenbauer',
         countrytext: 'Antes de jogar, certifiquese de que a alemanha não está do outro lado!',
         activeBtn: botaoAlemanha,
@@ -120,7 +124,7 @@ botaoFranca.addEventListener('click', () => {
         headerBg:  '#17548C',
         sectionBg: '#17548C',
         bodyBg:    '#21304D',
-        imgSrc:    'images/Zinedine Zidane - FootyRenders.png',
+        imgSrc:    '../images/Zinedine Zidane - FootyRenders.png',
         imgAlt:    'Zinedine Zidane',
         countrytext: 'Orgulho europeu e africano!',
         activeBtn: botaoFranca,
@@ -175,19 +179,40 @@ document.querySelector('.prev-btn').addEventListener('click', () => handleSlider
 
 async function syncApplicationData() {
     try {
-        const copasResponse = await fetch('http://localhost:3000/copas');
-        databaseCopas = await copasResponse.json();
-        
-        if (currentSessionUser) {
+        const [copasRes, jogadoresRes, timesRes, jogosRes] = await Promise.all([
+            fetch('http://localhost:3000/copas'),
+            fetch('http://localhost:3000/jogadores'),
+            fetch('http://localhost:3000/times'),
+            fetch('http://localhost:3000/jogos'),
+        ]);
+
+        const [copas, jogadores, times, jogos] = await Promise.all([
+            copasRes.json(), jogadoresRes.json(), timesRes.json(), jogosRes.json()
+        ]);
+
+        databaseCopas = [
+            ...copas.map(i     => ({ ...i, tipo: 'copas'     })),
+            ...jogadores.map(i => ({ ...i, tipo: 'jogadores' })),
+            ...times.map(i     => ({ ...i, tipo: 'times'     })),
+            ...jogos.map(i     => ({ ...i, tipo: 'jogos'     })),
+        ];
+    } catch (e) {
+        console.error('Erro ao carregar dados:', e);
+    }
+
+    
+    if (currentSessionUser) {
+        try {
             const favsResponse = await fetch(`http://localhost:3000/favoritos?usuarioId=${currentSessionUser.id}`);
             userFavorites = await favsResponse.json();
+        } catch (e) {
+            console.warn('Favoritos indisponíveis:', e);
+            userFavorites = [];
         }
-        
-        renderEncyclopediaGrid();
-        generateAnalyticsChart();
-    } catch (e) {
-        console.error(e);
     }
+
+    renderEncyclopediaGrid();
+    generateAnalyticsChart();
 }
 
 function renderEncyclopediaGrid() {
@@ -200,10 +225,15 @@ function renderEncyclopediaGrid() {
         targetDataset = targetDataset.filter(item => userFavorites.some(f => f.copaId === item.id));
     }
     
+    if (selectedTypeFilter) {
+        targetDataset = targetDataset.filter(item => item.tipo === selectedTypeFilter);
+    }
+
     if (query !== '') {
         targetDataset = targetDataset.filter(item => 
-            item.year.toString().includes(query) || 
-            item.description.toLowerCase().includes(query)
+            (item.year?.toString().includes(query)) || 
+            (item.name?.toLowerCase().includes(query)) ||
+            (item.description?.toLowerCase().includes(query))
         );
     }
     
@@ -219,7 +249,6 @@ function renderEncyclopediaGrid() {
         
         const isFavorited = userFavorites.some(f => f.copaId === item.id);
         let favoriteButtonHTML = '';
-        
         if (currentSessionUser) {
             favoriteButtonHTML = `
                 <button class="fav-toggle-btn" onclick="toggleFavoriteState(event, '${item.id}', ${isFavorited})">
@@ -227,21 +256,27 @@ function renderEncyclopediaGrid() {
                 </button>
             `;
         }
-        
+
+        const typeLabels = {
+            copas:     { badge: 'Edição',  title: `Copa de ${item.year}`, meta: `<span>Sede: ${item.host_country}</span><span>Campeão: ${item.winner}</span>` },
+            jogadores: { badge: 'Jogador', title: item.name,              meta: '' },
+            times:     { badge: 'Time',    title: item.name,              meta: '' },
+            jogos:     { badge: 'Jogo',    title: item.name,              meta: '' },
+        };
+        const { badge, title, meta } = typeLabels[item.tipo] ?? typeLabels.copas;
+        const thumbLabel = item.year ?? item.name ?? '';
+
         card.innerHTML = `
             <div class="enc-card-thumb thumb-edicao">
-                <img src="${item.image_url}" alt="${item.year}" onerror="this.style.display='none'">
-                <div class="enc-fallback">${item.year}</div>
+                <img src="${item.image_url}" alt="${thumbLabel}" onerror="this.style.display='none'">
+                <div class="enc-fallback">${thumbLabel}</div>
                 ${favoriteButtonHTML}
             </div>
             <div class="enc-card-body">
-                <span class="enc-badge badge-edicao">Edição</span>
-                <h3 class="enc-card-name">Copa de ${item.year}</h3>
+                <span class="enc-badge badge-edicao">${badge}</span>
+                <h3 class="enc-card-name">${title}</h3>
                 <p class="enc-card-sub">${item.description}</p>
-                <div class="enc-card-meta">
-                    <span>Sede: ${item.host_country}</span>
-                    <span>Campeão: ${item.winner}</span>
-                </div>
+                <div class="enc-card-meta">${meta}</div>
             </div>
         `;
         encyclopediaGrid.appendChild(card);
@@ -270,8 +305,27 @@ async function toggleFavoriteState(event, copaId, status) {
 
 searchBar.addEventListener('input', renderEncyclopediaGrid);
 
+// Configuração dos eventos para os botões de Filtro por Categoria (tipo)
+typeFilters.forEach(button => {
+    button.addEventListener('click', () => {
+        // Remove a classe active de todos os filtros de tipo e botões globais
+        typeFilters.forEach(btn => btn.classList.remove('active'));
+        filterAllBtn.classList.remove('active');
+        filterFavBtn.classList.remove('active');
+
+        // Adiciona active no botão clicado
+        button.classList.add('active');
+        
+        // Define a categoria atual e renderiza o grid
+        selectedTypeFilter = button.getAttribute('data-type');
+        renderEncyclopediaGrid();
+    });
+});
+
 filterAllBtn.addEventListener('click', () => {
     currentViewMode = 'all';
+    selectedTypeFilter = null; // Reseta o filtro de categoria
+    typeFilters.forEach(btn => btn.classList.remove('active'));
     filterFavBtn.classList.remove('active');
     filterAllBtn.classList.add('active');
     renderEncyclopediaGrid();
@@ -279,6 +333,8 @@ filterAllBtn.addEventListener('click', () => {
 
 filterFavBtn.addEventListener('click', () => {
     currentViewMode = 'favorites';
+    selectedTypeFilter = null; // Reseta o filtro de categoria
+    typeFilters.forEach(btn => btn.classList.remove('active'));
     filterAllBtn.classList.remove('active');
     filterFavBtn.classList.add('active');
     renderEncyclopediaGrid();

@@ -29,7 +29,7 @@
       "destaque": true,
       "gols_marcados": 172,
       "partidas_jogadas": 64,
-      "image_url": "https://images.unsplash.com/photo-1670154942953-d1df52b04c8c?auto=format&fit=crop&w=800&q=80"
+      "image_url": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80"
     },
     {
       "id": "2",
@@ -37,20 +37,20 @@
       "host_country": "Rússia",
       "winner": "França",
       "winner_logo": "https://media.api-sports.io/football/teams/2.png",
-      "description": "Bicampeonato da França com um time jovem, explosivo e liderado pelo prodígio Kylian Mbappé.",
-      "long_description": "A França conquistou seu segundo título mundial na Rússia com uma campanha sólida. Na final, derrotou a surpreendente Croácia por 4 a 2, consolidando uma geração de craques como Griezmann, Pogba e o jovem Mbappé.",
-      "destaque": false,
+      "description": "O bicampeonato dos Bleus com o brilho do jovem Mbappé em solo russo.",
+      "long_description": "A França confirmou seu favoritismo na Rússia com um elenco jovem e vertical. Mbappé encantou o mundo, tornando-se o segundo adolescente a marcar em uma final de Copa, igualando Pelé na vitória por 4 a 2 sobre a Croácia.",
+      "destaque": true,
       "gols_marcados": 169,
       "partidas_jogadas": 64,
-      "image_url": "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?auto=format&fit=crop&w=800&q=80"
+      "image_url": "https://images.unsplash.com/photo-1518063319789-7217e6706b04?auto=format&fit=crop&w=800&q=80"
     },
     {
       "id": "3",
       "year": 2014,
       "host_country": "Brasil",
       "winner": "Alemanha",
-      "winner_logo": "https://media.api-sports.io/football/teams/25.png",
-      "description": "A Alemanha conquista o tetra no Brasil, incluindo o histórico placar de 7 a 1 sobre os donos da casa.",
+      "winner_logo": "https://media.api-sports.io/football/teams/default.png",
+      "description": "O tetracampeonato alemão incontestável, incluindo o histórico placar de 7 a 1 sobre os donos da casa.",
       "long_description": "A Copa de 2014 no Brasil ficou marcada pela grande festa das torcidas e por resultados surpreendentes. A seleção alemã mostrou um futebol coletivo brilhante, goleou o Brasil na semifinal e bateu a Argentina na final com gol de Mario Götze na prorrogação.",
       "destaque": true,
       "gols_marcados": 171,
@@ -64,11 +64,49 @@
       "winner": "Itália",
       "winner_logo": "https://media.api-sports.io/football/teams/20.png",
       "description": "O tetracampeonato da Azurra, marcado pela solidez defensiva e a despedida dramática de Zidane.",
-      "long_description": "A Itália conquistou a Copa de 2006 apostando em uma defesa quase intransponível liderada por Cannavaro. A final contra a França ficou eternizada pela expulsão do craque Zinedine Zidane após uma cabeçada em Materazzi, com a Itália vencendo nos pênaltis.",
+      "long_description": "A Itália conquistou a Copa de 2006 apostando em uma defense quase intransponível liderada por Cannavaro. A final contra a França ficou eternizada pela expulsão do craque Zinedine Zidane após uma cabeçada em Materazzi, com a Itália vencendo nos pênaltis.",
       "destaque": false,
       "gols_marcados": 147,
       "partidas_jogadas": 64,
       "image_url": "https://images.unsplash.com/photo-1516567727245-ad8c68f3ec93?auto=format&fit=crop&w=800&q=80"
+    },
+    {
+      "id": "5",
+      "year": 2002,
+      "host_country": "Coreia e Japão",
+      "winner": "Brasil",
+      "winner_logo": "https://media.api-sports.io/football/teams/default.png",
+      "description": "O pentacampeonato invicto do Brasil liderado pelo fenômeno Ronaldo.",
+      "long_description": "Superando desconfianças, a Seleção Brasileira venceu todos os seus 7 jogos. Ronaldo deu a volta por cima após os problemas de 1998 e marcou dois gols na grande final contra a Alemanha, garantindo o Penta.",
+      "destaque": true,
+      "gols_marcados": 161,
+      "partidas_jogadas": 64,
+      "image_url": "https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format&fit=crop&w=800&q=80"
+    }
+  ],
+  "jogadores": [
+    {
+      "id": "j1",
+      "name": "Pelé",
+      "description": "O Rei do Futebol e único jogador a vencer 3 edições da Copa do Mundo.",
+      "image_url": "https://images.unsplash.com/photo-1518063319789-7217e6706b04?auto=format&fit=crop&w=800&q=80",
+      "api_id": 1234
+    }
+  ],
+  "times": [
+    {
+      "id": "t1",
+      "name": "Brasil 1970",
+      "description": "Considerada por muitos especialistas como a maior equipe de futebol de todos os tempos.",
+      "image_url": "https://images.unsplash.com/photo-1544698310-74ea9d1c8258?auto=format&fit=crop&w=800&q=80"
+    }
+  ],
+  "jogos": [
+    {
+      "id": "g1",
+      "name": "Itália 3 x 2 Brasil (1982)",
+      "description": "A Tragédia do Sarriá que marcou a eliminação de um dos times mais brilhantes do Brasil.",
+      "image_url": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80"
     }
   ],
   "favoritos": [
@@ -76,6 +114,12 @@
       "id": "1",
       "usuarioId": "ec37c83d-4b7f-458d-9e10-3fda7d37cd3e",
       "copaId": "1"
+    },
+    {
+      "usuarioId": "187cb7e5-e097-4224-8bc7-b610c855e2b1",
+      "copaId": "1",
+      "id": "NCCnr3UmvF8"
     }
-  ]
-  }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
