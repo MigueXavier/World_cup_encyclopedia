@@ -32,17 +32,17 @@
       "image_url": "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80"
     },
     {
-      "id": "2",
       "year": 2018,
       "host_country": "Rússia",
       "winner": "França",
-      "winner_logo": "https://media.api-sports.io/football/teams/2.png",
+      "winner_logo": "https://media.api-sports.io/football/teams/default.png",
       "description": "O bicampeonato dos Bleus com o brilho do jovem Mbappé em solo russo.",
       "long_description": "A França confirmou seu favoritismo na Rússia com um elenco jovem e vertical. Mbappé encantou o mundo, tornando-se o segundo adolescente a marcar em uma final de Copa, igualando Pelé na vitória por 4 a 2 sobre a Croácia.",
       "destaque": true,
       "gols_marcados": 169,
       "partidas_jogadas": 64,
-      "image_url": "https://images.unsplash.com/photo-1518063319789-7217e6706b04?auto=format&fit=crop&w=800&q=80"
+      "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSgQ0MqBRus660p2oyCJHfCNVlP1DHgZ5-6sQvSAsC39pkKho0QAb1FFqBO&s=10",
+      "id": "2"
     },
     {
       "id": "3",
@@ -86,11 +86,11 @@
   ],
   "jogadores": [
     {
-      "id": "j1",
       "name": "Pelé",
       "description": "O Rei do Futebol e único jogador a vencer 3 edições da Copa do Mundo.",
-      "image_url": "https://images.unsplash.com/photo-1518063319789-7217e6706b04?auto=format&fit=crop&w=800&q=80",
-      "api_id": 1234
+      "image_url": "https://s2-ge.glbimg.com/6Y2miv0aetJaf77V_dk1NKXkApo=/0x0:2000x1264/984x0/smart/filters:strip_icc()/s.glbimg.com/es/ge/f/original/2014/11/25/pele_copadomundo_1970_ap.jpghttps://s2-ge.glbimg.com/6Y2miv0aetJaf77V_dk1NKXkApo=/0x0:2000x1264/984x0/smart/filters:strip_icc()/s.glbimg.com/es/ge/f/original/2014/11/25/pele_copadomundo_1970_ap.jpg",
+      "api_id": 1234,
+      "id": "j1"
     }
   ],
   "times": [
@@ -117,8 +117,8 @@
     },
     {
       "usuarioId": "187cb7e5-e097-4224-8bc7-b610c855e2b1",
-      "copaId": "1",
-      "id": "NCCnr3UmvF8"
+      "copaId": "j1",
+      "id": "tVeJGBxWDCg"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

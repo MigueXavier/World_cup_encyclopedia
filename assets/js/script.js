@@ -17,7 +17,6 @@ const searchBar = document.getElementById('searchBar');
 const filterAllBtn = document.getElementById('filter-all-btn');
 const filterFavBtn = document.getElementById('filter-fav-btn');
 
-// Seleção das novas opções de filtro por categoria
 const typeFilters = document.querySelectorAll('.type-filter');
 
 const allButtons = [botaoBrasil, botaoAlemanha, botaoFranca];
@@ -27,7 +26,8 @@ let databaseCopas = [];
 let userFavorites = [];
 let activeSliderIndex = 0;
 let currentViewMode = 'all'; 
-let selectedTypeFilter = null; // Rastreia o filtro de tipo ativo ('jogadores', 'copas', etc.)
+let selectedTypeFilter = null;
+
 
 function processUserSession() {
     const sessionData = sessionStorage.getItem('usuarioCorrente');
@@ -55,6 +55,7 @@ function executeLogout() {
     window.location.reload();
 }
 
+// ── Tema / imagem ─────────────────────────────────────────────────────────
 function trocaImagem(src, alt) {
     img.classList.add('fading');
     setTimeout(() => {
@@ -62,9 +63,7 @@ function trocaImagem(src, alt) {
         img.alt = alt;
         img.style.width  = '300px';
         img.style.height = 'auto';
-        img.onload = () => {
-            img.classList.remove('fading');
-        };
+        img.onload = () => { img.classList.remove('fading'); };
         if (img.complete) img.classList.remove('fading');
     }, 350); 
 }
@@ -78,12 +77,12 @@ function aplicaTema({ headerBg, sectionBg, bodyBg, imgSrc, imgAlt, countrytext, 
     activeBtn.classList.add('active');
 
     if (loginBtnStyle) {
-        loginBtn.style.borderColor = loginBtnStyle.borderColor;
-        loginBtn.style.color       = loginBtnStyle.color;
+        loginBtn.style.borderColor     = loginBtnStyle.borderColor;
+        loginBtn.style.color           = loginBtnStyle.color;
         loginBtn.style.backgroundColor = loginBtnStyle.bgColor;
     } else {
-        loginBtn.style.borderColor = "rgba(255, 255, 255, 0.2)";
-        loginBtn.style.color       = "#fff";
+        loginBtn.style.borderColor     = "rgba(255, 255, 255, 0.2)";
+        loginBtn.style.color           = "#fff";
         loginBtn.style.backgroundColor = "rgba(255, 255, 255, 0.08)";
     }
     trocaImagem(imgSrc, imgAlt);
@@ -98,11 +97,7 @@ botaoBrasil.addEventListener('click', () => {
         imgAlt:    'Pelé',
         countrytext: 'Penta campeão do mundo!',
         activeBtn: botaoBrasil,
-        loginBtnStyle: {
-            borderColor: '#E7BF1A',
-            color: '#E7BF1A',
-            bgColor: 'rgba(0, 0, 0, 0.2)'
-        }
+        loginBtnStyle: { borderColor: '#E7BF1A', color: '#E7BF1A', bgColor: 'rgba(0,0,0,0.2)' }
     });
 });
  
@@ -113,7 +108,7 @@ botaoAlemanha.addEventListener('click', () => {
         bodyBg:    '#f4f4f4',
         imgSrc:    '../images/Franz Beckenbauer - FootyRenders.png',
         imgAlt:    'Franz Beckenbauer',
-        countrytext: 'Antes de jogar, certifiquese de que a alemanha não está do outro lado!',
+        countrytext: 'Antes de jogar, certifique-se de que a Alemanha não está do outro lado!',
         activeBtn: botaoAlemanha,
         loginBtnStyle: null 
     });
@@ -128,11 +123,7 @@ botaoFranca.addEventListener('click', () => {
         imgAlt:    'Zinedine Zidane',
         countrytext: 'Orgulho europeu e africano!',
         activeBtn: botaoFranca,
-        loginBtnStyle: {
-            borderColor: 'rgba(255, 255, 255, 0.4)',
-            color: '#fff',
-            bgColor: 'rgba(255, 255, 255, 0.1)'
-        }
+        loginBtnStyle: { borderColor: 'rgba(255,255,255,0.4)', color: '#fff', bgColor: 'rgba(255,255,255,0.1)' }
     });
 });
 
@@ -144,7 +135,7 @@ async function loadSliderContent() {
         data.forEach(item => {
             const slide = document.createElement('div');
             slide.classList.add('slider-item');
-            slide.onclick = () => { window.location.href = `detalhes.html?id=${item.id}`; };
+            slide.onclick = () => openDrawer({ ...item, tipo: 'copas' });
             slide.innerHTML = `
                 <img src="${item.image_url}" class="slider-img" onerror="this.style.display='none'">
                 <div class="slider-info">
@@ -177,6 +168,7 @@ function handleSliderNavigation(direction) {
 document.querySelector('.next-btn').addEventListener('click', () => handleSliderNavigation('next'));
 document.querySelector('.prev-btn').addEventListener('click', () => handleSliderNavigation('prev'));
 
+
 async function syncApplicationData() {
     try {
         const [copasRes, jogadoresRes, timesRes, jogosRes] = await Promise.all([
@@ -200,7 +192,6 @@ async function syncApplicationData() {
         console.error('Erro ao carregar dados:', e);
     }
 
-    
     if (currentSessionUser) {
         try {
             const favsResponse = await fetch(`http://localhost:3000/favoritos?usuarioId=${currentSessionUser.id}`);
@@ -214,6 +205,7 @@ async function syncApplicationData() {
     renderEncyclopediaGrid();
     generateAnalyticsChart();
 }
+
 
 function renderEncyclopediaGrid() {
     encyclopediaGrid.innerHTML = '';
@@ -245,7 +237,9 @@ function renderEncyclopediaGrid() {
     targetDataset.forEach(item => {
         const card = document.createElement('div');
         card.classList.add('enc-card');
-        card.onclick = () => { window.location.href = `detalhes.html?id=${item.id}`; };
+
+
+        card.onclick = () => openDrawer(item);
         
         const isFavorited = userFavorites.some(f => f.copaId === item.id);
         let favoriteButtonHTML = '';
@@ -258,10 +252,10 @@ function renderEncyclopediaGrid() {
         }
 
         const typeLabels = {
-            copas:     { badge: 'Edição',  title: `Copa de ${item.year}`, meta: `<span>Sede: ${item.host_country}</span><span>Campeão: ${item.winner}</span>` },
-            jogadores: { badge: 'Jogador', title: item.name,              meta: '' },
-            times:     { badge: 'Time',    title: item.name,              meta: '' },
-            jogos:     { badge: 'Jogo',    title: item.name,              meta: '' },
+            copas:     { badge: 'Edição',   title: `Copa de ${item.year}`, meta: `<span>Sede: ${item.host_country}</span><span>Campeão: ${item.winner}</span>` },
+            jogadores: { badge: 'Jogador',  title: item.name,              meta: '' },
+            times:     { badge: 'Time',     title: item.name,              meta: '' },
+            jogos:     { badge: 'Jogo',     title: item.name,              meta: '' },
         };
         const { badge, title, meta } = typeLabels[item.tipo] ?? typeLabels.copas;
         const thumbLabel = item.year ?? item.name ?? '';
@@ -283,6 +277,116 @@ function renderEncyclopediaGrid() {
     });
 }
 
+
+function openDrawer(item) {
+    const drawerInner = document.getElementById('drawerInner');
+    drawerInner.innerHTML = buildDrawerContent(item);
+    document.getElementById('drawerOverlay').classList.add('open');
+    document.getElementById('drawer').classList.add('open');
+}
+
+function closeDrawer() {
+    document.getElementById('drawerOverlay').classList.remove('open');
+    document.getElementById('drawer').classList.remove('open');
+}
+
+// Fecha com Escape
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeDrawer();
+});
+
+function buildDrawerContent(item) {
+    switch (item.tipo) {
+        case 'copas':     return buildDrawerCopa(item);
+        case 'jogadores': return buildDrawerSimples(item, 'Jogador');
+        case 'times':     return buildDrawerSimples(item, 'Time');
+        case 'jogos':     return buildDrawerSimples(item, 'Jogo Histórico');
+        default:          return buildDrawerSimples(item, 'Item');
+    }
+}
+
+
+function buildDrawerCopa(item) {
+    return `
+        <div class="drawer-hero">
+            <img
+                class="drawer-photo"
+                src="${item.image_url}"
+                alt="Copa ${item.year}"
+                onerror="this.style.display='none'"
+            >
+            <div class="drawer-hero-info">
+                <div class="enc-badge badge-edicao" style="margin-bottom:8px;">Edição</div>
+                <div class="drawer-name">Copa do Mundo ${item.year}</div>
+                <div class="drawer-sub">${item.host_country}</div>
+            </div>
+            <button class="drawer-close" onclick="closeDrawer()">✕</button>
+        </div>
+
+        <div class="drawer-stats-grid">
+            <div class="stat-box">
+                <div class="stat-value">${item.year}</div>
+                <div class="stat-label">Ano</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">${item.gols_marcados ?? '—'}</div>
+                <div class="stat-label">Gols</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-value">${item.partidas_jogadas ?? '—'}</div>
+                <div class="stat-label">Partidas</div>
+            </div>
+        </div>
+
+        <div class="drawer-info-grid">
+            <div class="info-row">
+                <span class="info-label">País Sede</span>
+                <span class="info-value">${item.host_country}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">Campeão</span>
+                <span class="info-value">${item.winner}</span>
+            </div>
+        </div>
+
+        <p class="drawer-section-title">Sobre esta edição</p>
+        <p style="font-size: clamp(0.8rem, 1.6vw, 0.95rem); color: rgba(255,255,255,0.6); line-height: 1.7; margin-bottom: 5%;">
+            ${item.long_description ?? item.description}
+        </p>
+    `;
+}
+
+// Template genérico para Jogadores, Times e Jogos
+function buildDrawerSimples(item, tipoLabel) {
+    const badgeClass = {
+        'Jogador':        'badge-jogador',
+        'Time':           'badge-time',
+        'Jogo Histórico': 'badge-jogo',
+    }[tipoLabel] ?? 'badge-edicao';
+
+    return `
+        <div class="drawer-hero">
+            <img
+                class="drawer-photo"
+                src="${item.image_url}"
+                alt="${item.name}"
+                onerror="this.style.display='none'"
+            >
+            <div class="drawer-hero-info">
+                <div class="enc-badge ${badgeClass}" style="margin-bottom:8px;">${tipoLabel}</div>
+                <div class="drawer-name">${item.name}</div>
+            </div>
+            <button class="drawer-close" onclick="closeDrawer()">✕</button>
+        </div>
+
+        <p class="drawer-section-title">Descrição</p>
+        <p style="font-size: clamp(0.8rem, 1.6vw, 0.95rem); color: rgba(255,255,255,0.6); line-height: 1.7; margin-bottom: 5%;">
+            ${item.description}
+        </p>
+    `;
+}
+
+// ── Favoritos ─────────────────────────────────────────────────────────────
 async function toggleFavoriteState(event, copaId, status) {
     event.stopPropagation();
     if (!currentSessionUser) return;
@@ -303,20 +407,15 @@ async function toggleFavoriteState(event, copaId, status) {
     syncApplicationData();
 }
 
+// ── Filtros ───────────────────────────────────────────────────────────────
 searchBar.addEventListener('input', renderEncyclopediaGrid);
 
-// Configuração dos eventos para os botões de Filtro por Categoria (tipo)
 typeFilters.forEach(button => {
     button.addEventListener('click', () => {
-        // Remove a classe active de todos os filtros de tipo e botões globais
         typeFilters.forEach(btn => btn.classList.remove('active'));
         filterAllBtn.classList.remove('active');
         filterFavBtn.classList.remove('active');
-
-        // Adiciona active no botão clicado
         button.classList.add('active');
-        
-        // Define a categoria atual e renderiza o grid
         selectedTypeFilter = button.getAttribute('data-type');
         renderEncyclopediaGrid();
     });
@@ -324,7 +423,7 @@ typeFilters.forEach(button => {
 
 filterAllBtn.addEventListener('click', () => {
     currentViewMode = 'all';
-    selectedTypeFilter = null; // Reseta o filtro de categoria
+    selectedTypeFilter = null;
     typeFilters.forEach(btn => btn.classList.remove('active'));
     filterFavBtn.classList.remove('active');
     filterAllBtn.classList.add('active');
@@ -333,12 +432,13 @@ filterAllBtn.addEventListener('click', () => {
 
 filterFavBtn.addEventListener('click', () => {
     currentViewMode = 'favorites';
-    selectedTypeFilter = null; // Reseta o filtro de categoria
+    selectedTypeFilter = null;
     typeFilters.forEach(btn => btn.classList.remove('active'));
     filterAllBtn.classList.remove('active');
     filterFavBtn.classList.add('active');
     renderEncyclopediaGrid();
 });
+
 
 let renderedChartInstance = null;
 function generateAnalyticsChart() {
@@ -346,18 +446,17 @@ function generateAnalyticsChart() {
     if (!canvasElement) return;
     const ctx = canvasElement.getContext('2d');
     
-    const timelineData = [...databaseCopas].sort((a, b) => parseInt(a.year) - parseInt(b.year));
+    const copasOnly = databaseCopas.filter(i => i.tipo === 'copas' && i.gols_marcados);
+    const timelineData = copasOnly.sort((a, b) => parseInt(a.year) - parseInt(b.year));
     const labels = timelineData.map(item => item.year);
     const datasetValues = timelineData.map(item => item.gols_marcados);
     
-    if (renderedChartInstance) {
-        renderedChartInstance.destroy();
-    }
+    if (renderedChartInstance) renderedChartInstance.destroy();
     
     renderedChartInstance = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: labels,
+            labels,
             datasets: [{
                 label: 'Gols por Edição',
                 data: datasetValues,
@@ -373,25 +472,19 @@ function generateAnalyticsChart() {
             scales: {
                 y: {
                     beginAtZero: true,
-                    grid: { color: 'rgba(255, 255, 255, 0.05)' },
-                    ticks: { color: 'rgba(255, 255, 255, 0.4)', font: { family: 'Inter' } }
+                    grid:  { color: 'rgba(255,255,255,0.05)' },
+                    ticks: { color: 'rgba(255,255,255,0.4)', font: { family: 'Inter' } }
                 },
                 x: {
-                    grid: { display: false },
-                    ticks: { color: 'rgba(255, 255, 255, 0.4)', font: { family: 'Inter' } }
+                    grid:  { display: false },
+                    ticks: { color: 'rgba(255,255,255,0.4)', font: { family: 'Inter' } }
                 }
             },
-            plugins: {
-                legend: { display: false }
-            }
+            plugins: { legend: { display: false } }
         }
     });
 }
 
-function closeDrawer() {
-  document.getElementById('drawerOverlay').classList.remove('open');
-  document.getElementById('drawer').classList.remove('open');
-}
 
 processUserSession();
 loadSliderContent();
